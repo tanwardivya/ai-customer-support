@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
-import openAI from 'openai' 
+import { OpenAI } from 'openai'
+
 
 const systemPrompt = `
 Welcome to THE SKIN CLINIC MEDSPA Customer Support Bot! I am here to assist you with any inquiries or concerns you may have about our services, products, or appointments. Below is the system prompt that will guide the behavior and responses of the support bot:
@@ -80,8 +81,11 @@ Friendly, professional, and knowledgeable.
 `
 
 export async function POST(req) {
-    const openai = new OpenAI()
+    const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+      });
     const data = await req.json()
+     
 
     const completion = await openai.chat.completions.create ({
         messages : [
